@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <!-- <link rel="stylesheet" href="signup.css"> -->
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .register-container{
+            max-width: 300px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid#ddd;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2{
+            text-align: center;
+            font-size: 40px;
+            color: rgb(95, 13, 158);
+            margin-bottom: 10px;
+        }
+        form{
+            /* display: flex; */
+            /* flex-direction: row; */
+        }
+        label{
+            /* margin-top: 10px; */
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="number"], input[type="textarea"], input[type="password"], input[type="confirmPassword"]{
+            width: 100%;
+            height: 40px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        button[type="submit"]{
+            width: 100%;
+            height: 40px;
+            background-color: #4CAF50;
+            color: #FFF;
+            padding: 10PX;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+</style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Register</h2>
+        <form action="" method="post" id="userForm">
+                    <label for="">Name</label>
+                    <input type="text" class="firstName" id="username" placeholder="Deepankar"/>
+
+                    <label for="">Contact No</label>
+                    <input type="number" class="contactNumber" id="contactNumber" placeholder="Enter Your Contact Number here"/>
+
+                    <label for="">Password</label>
+                    <input type="password" name="password" id="password" placeholder="enter your password here"/>
+
+                    <label for="">Confirm password</label>
+                    <input type="confirmPassword" name="confirmPassword" id="confirmPassword" placeholder="enter your password again"/>
+
+                    <button type="submit" id="regBtn">Register</button>
+        </form>
+
+        <script>
+            document.getElementById('userForm').addEventListener('submit',async (event) => {
+                event.preventDefault();
+
+                const username = document.getElementById('username').value;
+                const usercontact = document.getElementById('contactNumber').value;
+                const userpassword = document.getElementById('password').value;
+
+                const response = await fetch('http://127.0.0.1:5500/signup.html', {
+                    method: 'POST',
+                    headers: {
+                        'Content-type' : 'application/json'
+                    },
+                    body: JSON.stringify({username,usercontact,password})
+                });
+                if(response.ok){
+                    const result = await response.json();
+                    alert(`User registered with ID: ${result.id}`);
+                }else{
+                    alert('Registration failed');
+                }
+            });
+
+
+        </script>
+</body>
+</html>
